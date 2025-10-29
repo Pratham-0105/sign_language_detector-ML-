@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Language Detector</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            --secondary-gradient: linear-gradient(135deg, #ff6b6b 0%, #ffa502 100%);
+            --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            --dark-overlay: rgba(0, 0, 0, 0.7);
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #fff;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .hero {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 120px 0;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+            animation: shine 8s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: rotate(30deg) translate(-10%, -10%); }
+            50% { transform: rotate(30deg) translate(10%, 10%); }
+            100% { transform: rotate(30deg) translate(-10%, -10%); }
+        }
+        
+        .hero h1 {
+            font-weight: 800;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .feature-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--primary-gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-card .card-body {
+            padding: 30px;
+        }
+        
+        .feature-card h2 {
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .feature-card h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-gradient);
+            border-radius: 3px;
+        }
+        
+        .btn-custom {
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-custom::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn-custom:hover::before {
+            left: 100%;
+        }
+        
+        .btn-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-custom:active {
+            transform: translateY(1px);
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-body {
+            padding: 25px;
+        }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--primary-gradient);
+            border-radius: 2px;
+        }
+        
+        .step-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        .floating-animation {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: var(--secondary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        
+        .breadcrumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px 20px;
+        }
+        
+        .alert {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        ol li, ul li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero text-center">
+        <div class="container position-relative">
+            <h1 class="display-3 fw-bold floating-animation">Sign Language Detector</h1>
+            <p class="lead fs-4">Real-time American Sign Language recognition using machine learning</p>
+            <div class="mt-4">
+                <i class="fas fa-hands fa-3x pulse-animation"></i>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-6 mb-4">
+                <div class="feature-card shadow h-100">
+                    <div class="card-body p-4 text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h2 class="card-title">Train Model</h2>
+                        <p class="card-text">Collect training data, create datasets, and train the machine learning model to recognize sign language gestures.</p>
+                        <a href="/train" class="btn btn-custom w-100">Start Training</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="feature-card shadow h-100">
+                    <div class="card-body p-4 text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h2 class="card-title">Run Inference</h2>
+                        <p class="card-text">Use the trained model to detect and interpret sign language gestures in real-time through your webcam.</p>
+                        <a href="/inference" class="btn btn-custom w-100">Start Detection</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+ 
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h3 class="section-title text-center">How It Works</h3>
+                        <div class="row text-center">
+                            <div class="col-md-4 mb-4">
+                                <div class="step-icon">
+                                    <i class="fas fa-camera"></i>
+                                </div>
+                                <h4>1. Data Collection</h4>
+                                <p>Capture images for each sign gesture using your webcam</p>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="step-icon">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                <h4>2. Dataset Creation</h4>
+                                <p>Process collected images into a machine learning dataset</p>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="step-icon">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <h4>3. Model Training</h4>
+                                <p>Train the classifier to recognize different sign language gestures</p>
+                            </div>
+                        </div>
+                        <ol class="mt-4">
+                            <li><strong>Training:</strong> Collect images for each sign, create a dataset, and train the model</li>
+                            <li><strong>Inference:</strong> Use your webcam to detect signs in real-time</li>
+                        </ol>
+                        <p class="text-muted">Make sure your webcam is connected and properly configured before starting detection.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h3 class="section-title text-center">Troubleshooting</h3>
+                        <h5>Common Issues and Solutions:</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul>
+                                    <li><strong>Camera not working:</strong> 
+                                        <ul>
+                                            <li>Check that your webcam is properly connected</li>
+                                            <li>Ensure no other application is using the camera</li>
+                                            <li>On macOS, verify camera permissions in System Preferences</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul>
+                                    <li><strong>Model training fails:</strong>
+                                        <ul>
+                                            <li>Make sure you've collected images for all classes before training</li>
+                                            <li>Check that the dataset creation step completed successfully</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Inference not detecting signs:</strong>
+                                        <ul>
+                                            <li>Ensure the model was trained successfully</li>
+                                            <li>Make sure your hand is clearly visible in the camera frame</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center">
+        <div class="container">
+            <p class="mb-0">Real-time Gesture Recognition, by: Prathmesh ,Viraj ,Shraddha</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
